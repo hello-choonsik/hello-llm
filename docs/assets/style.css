@@ -27,3 +27,7 @@ h6,
 header {
   font-family: "ookieRun-Regular";
 }
+
+#box p {
+  white-space: pre-wrap;
+}

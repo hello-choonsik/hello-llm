@@ -1,28 +1,48 @@
 async function main() {
-  async function handleScheduleBtn(event) {
-    event.preventDefault();
+  async function hanldeCC(event) {
+    event.preventDefault(); // Form의 기본 submit 막아줘야하고...
+
+    // 로딩을 추가했다가...
+    const spinner = document.createElement("div");
+    spinner.classList.add("spinner-border");
+    document.querySelector("#box").appendChild(spinner);
+
     const url = "http://127.0.0.1:3000";
     const formData = new FormData(document.querySelector("#schedule-form"));
     const text = formData.get("text");
-
-    console.log("버튼눌림");
+    // console.log(text);
     const response = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({
         text,
       }),
+      // Content-Type 꼭!
+      headers: {
+        "Content-Type": "Application/json",
+      },
     });
+    const json = await response.json();
 
-    const jsonData = await response.json();
-    document.querySelector("#box").textContent = JSON.stringify(jsonData);
+    // 로딩을 추가했다가 종료시 없애는...
+    spinner.remove();
+
+    // document.querySelector("#box").textContent = JSON.stringify(json);
+
+    const { image, desc } = json;
+
+    const box = document.querySelector("#box");
+    box.innerHTML = "";
+    const imageTag = document.createElement("img");
+    imageTag.classList.add("img-fluid");
+    imageTag.src = image; // image - link
+    const descTag = document.createElement("p");
+    descTag.textContent = desc;
+    box.appendChild(imageTag);
+    box.appendChild(descTag);
   }
 
-  document
-    .querySelector("#schedule-form")
-    .addEventListener("submit", handleScheduleBtn);
+  //   document.querySelector("#ccBtn").addEventListener("click", hanldeCC);
+  document.querySelector("#schedule-form").addEventListener("submit", hanldeCC);
 }
 
 document.addEventListener("DOMContentLoaded", main);
