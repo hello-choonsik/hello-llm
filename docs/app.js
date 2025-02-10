@@ -7,7 +7,7 @@ async function main() {
     spinner.classList.add("spinner-border");
     document.querySelector("#box").appendChild(spinner);
 
-    const url = "http://127.0.0.1:3000";
+    const url = "https://time-congruous-mallet.glitch.me";
     const formData = new FormData(document.querySelector("#schedule-form"));
     const text = formData.get("text");
     // console.log(text);
